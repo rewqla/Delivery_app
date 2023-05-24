@@ -19,6 +19,11 @@ namespace Delivery_app.Entities
                 {
                     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
+                    if (context.Shops.Any() || context.Products.Any())
+                    {
+                        return;
+                    }
+
                     var shops = new List<Shop>
                     {
                         new Shop { Name = "McDonald's" },

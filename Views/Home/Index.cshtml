@@ -1,8 +1,29 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Shops";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+    <div class="col-lg-3">
+        <div class="list-group">
+            @foreach (var shop in Model.ShopNames)
+            {
+                <a href="?shopName=@shop" class="list-group-item list-group-item-action">@shop</a>
+            }
+        </div>
+    </div>
+    <div class="col-lg-9">
+        <div class="row d-flex justify-content-around p-3">
+            @foreach (var product in Model.Products)
+            {
+                <div class="card mb-3" style="width: 16rem;">
+                    <img src="@product.Image" class="card-img-top" alt="Товар 1">
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-text">@product.Price ₴</p>
+                        <button type="button" class="btn btn-primary">Додати в корзину</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 </div>

@@ -1,4 +1,8 @@
 using Delivery_app.Entities;
+using Delivery_app.Repo.Implement;
+using Delivery_app.Repo.Interfaces;
+using Delivery_app.Services.Implement;
+using Delivery_app.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,6 +32,11 @@ namespace Delivery_app
             services.AddControllersWithViews();
             services.AddDbContext<ApplicationDbContext>(options =>
                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddTransient<IProductRepo, ProductRepo>();
+            services.AddTransient<IShopRepo, ShopRepo>();
+
+            services.AddScoped<IShopService, ShopService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
