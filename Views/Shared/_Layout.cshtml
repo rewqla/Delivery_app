@@ -11,8 +11,9 @@
 <body>
     <header>
 <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 d-flex justify-content-center">
-        <a class="navbar-brand" style="margin-right:50px" asp-action="index">Магазини</a>
-        <a class="navbar-brand" asp-action="cart"><img src="/img/shopping-cart.svg" alt="shopping cart" style="width:30px;margin-right:5px" />Корзина</a>
+        <a class="navbar-brand" style="margin-right:50px" asp-controller="home" asp-action="index">Магазини</a>
+        <a class="navbar-brand" style="margin-right:50px" href="/cart"><img src="/img/shopping-cart.svg" alt="shopping cart" style="width:30px;margin-right:5px" />Корзина</a>
+        <a class="navbar-brand" href="/orders"><img src="/img/order_icon.svg" alt="orders" style="width:30px;margin-right:5px" />Замовлення</a>
 </nav>
 
     </header>

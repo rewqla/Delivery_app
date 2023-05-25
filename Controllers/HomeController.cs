@@ -25,6 +25,12 @@ namespace Delivery_app.Controllers
             var model=_shopService.GetShopViewModel(shopName);
             return View(model);
         }
+        [Route("cart")]
+        public IActionResult Cart()
+        {
+            return View();
+        }
+
 
         public IActionResult Privacy()
         {
