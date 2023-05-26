@@ -35,8 +35,11 @@ namespace Delivery_app
 
             services.AddTransient<IProductRepo, ProductRepo>();
             services.AddTransient<IShopRepo, ShopRepo>();
+            services.AddTransient<IOrderRepo, OrderRepo>();
+            services.AddTransient<IOrderItemRepo, OrderItemRepo>();
 
             services.AddScoped<IShopService, ShopService>();
+            services.AddScoped<IOrderService, OrderService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

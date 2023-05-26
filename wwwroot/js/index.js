@@ -1,12 +1,11 @@
 ﻿const addToCartButtons = document.querySelectorAll('.addToCartBtn');
-console.log(2)
+
 let storage = JSON.parse(localStorage.getItem('cart'));
 if (!storage) {
     storage = [];
 }
 
 addToCartButtons.forEach((button) => {
-    console.log(1)
 
     const card = button.parentNode.parentNode;
     const productName = card.querySelector('.card-title').innerText;
@@ -33,4 +32,15 @@ addToCartButtons.forEach((button) => {
             card.querySelector('.btn-primary').classList.add("d-none");
         });
     }
+});
+
+var urlParams = new URLSearchParams(window.location.search);
+var shopName = urlParams.get('shopName');
+if (shopName == null)
+    shopName = "Мацурі";
+
+const anchors = document.querySelectorAll('.list-group-item');
+anchors.forEach(function (a) {
+    if (a.innerText === shopName)
+        a.classList.add('active');
 });

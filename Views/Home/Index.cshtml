@@ -16,7 +16,7 @@
         <div class="list-group">
             @foreach (var shop in Model.ShopNames)
             {
-                <a href="?shopName=@shop" class="list-group-item list-group-item-action">@shop</a>
+                <a href="?shopName=@shop" class="list-group-item list-group-item-action" onclick="selectAnchor(this)">@shop</a>
             }
         </div>
     </div>

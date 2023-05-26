@@ -15,7 +15,11 @@ namespace Delivery_app.Repo.Implement
             _context = context;
             _dbSet = context.Set<TEntity>();
         }
-
+        public void Add(TEntity item)
+        {
+            _dbSet.Add(item);
+            _context.SaveChanges();
+        }
         public IEnumerable<TEntity> GetAll()
         {
             return _dbSet.AsNoTracking().ToList();
