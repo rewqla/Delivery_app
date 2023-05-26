@@ -1,0 +1,49 @@
+﻿<style>
+    .order {
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .order-card {
+        margin-bottom: 20px;
+        max-width: 400px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+        .order-card .product-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+</style>
+<div class="container">
+    <h1>Пошук замовлень</h1>
+    <form id="orderLookupForm">
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input class="form-control" id="email" placeholder="Введіть пошту">
+            <span for="email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Телефон:</label>
+            <input class="form-control" id="phone" placeholder="Введіть телефон">
+            <span for="phone" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Пошук</button>
+    </form>
+
+    <div id="orders-result" class="container mt-4 d-none" style="border:1px solid #ddd; max-height: 500px; overflow-y: auto; overflow-x: hidden;">
+  
+    </div>
+    <div class="mt-5 text-center d-none" id="no-orders">
+        <h1>Замовлення даного покупця не знайдено</h1>
+        <img src="~/img/cabinet-orders-dummy.svg" alt="no orders" class="img-fluid" style="height: 500px;">
+    </div>
+</div>
+
+<script src="~/js/orderlookup.js" asp-append-version="true"></script>

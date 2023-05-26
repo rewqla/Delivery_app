@@ -8,6 +8,6 @@ namespace Delivery_app.Services.Interfaces
     {
         void CreateOrder(OrderViewModel model);
         void CreateOrderItems(List<OrderItemViewModel> orderItems, int orderId);
-        OrderViewModel[] FindOrders(string email, string phone);
+        List<OrderViewModel> FindOrders(OrderSearchViewModel model);
     }
 }

@@ -48,13 +48,52 @@ namespace Delivery_app.Services.Implement
             };
             _orderRepo.Add(order);
 
-            int Id=order.Id;
+            int Id = order.Id;
             CreateOrderItems(model.OrderItems, Id);
         }
 
-        public OrderViewModel[] FindOrders(string email, string phone)
+        public List<OrderViewModel> FindOrders(OrderSearchViewModel model)
         {
-            throw new System.NotImplementedException();
+            if (model.Phone.StartsWith("+38"))
+                model.Phone = model.Phone.Substring(3);
+            else if (model.Phone.StartsWith("38"))
+                model.Phone = model.Phone.Substring(2);
+
+            var orders = _orderRepo.GetAll().Where(x => x.Email == model.Email
+            && (x.Phone == model.Phone || x.Phone == "38" + model.Phone || x.Phone == "+38" + model.Phone));
+
+            if (orders.Any())
+            {
+                List<OrderViewModel> list = new List<OrderViewModel>();
+
+                foreach (var order in orders)
+                {
+                    OrderViewModel orderViewModel = new OrderViewModel
+                    {
+                        Address = order.Address,
+                        TotalPrice= order.TotalPrice,
+                        OrderItems = new List<OrderItemViewModel>()
+                    };
+
+                    var orderItems = _orderItemRepo.GetAll().Where(item => item.OrderId == order.Id);
+                    foreach (var item in orderItems)
+                    {
+                        var product = _productRepo.GetAll().FirstOrDefault(x => x.Id == item.ProductId);
+
+                        orderViewModel.OrderItems.Add(new OrderItemViewModel
+                        {
+                            Price = item.Price,
+                            Quantity = item.Quantity,
+                            ProductName = product.Name,
+                            ProductImage = product.Image,
+                        });
+                    }
+                    list.Add(orderViewModel);
+                }
+                return list;
+            }
+
+            return null;
         }
     }
 }

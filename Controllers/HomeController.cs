@@ -34,17 +34,30 @@ namespace Delivery_app.Controllers
             return View();
         }
         
-
         [HttpPost]
         public JsonResult CreateOrder([FromBody] OrderViewModel model)
         {
             _ordreService.CreateOrder(model);
             return Json("Success");
         }
+
         [Route("success")]
         public IActionResult Success()
         {
             return View();
+        }
+
+        [Route("orders")]
+        public IActionResult OrderLookUp()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult OrderLookUp([FromBody] OrderSearchViewModel model)
+        {
+            var searchData = _ordreService.FindOrders(model);
+            return Json(searchData);
         }
         public IActionResult Privacy()
         {

@@ -18,4 +18,10 @@ namespace Delivery_app.Models
         public string ProductName { get; set; }
         public string ProductImage { get; set; }
     }
+
+    public class OrderSearchViewModel
+    {
+        public string Email { get; set; }
+        public string Phone { get; set; }
+    }
 }
