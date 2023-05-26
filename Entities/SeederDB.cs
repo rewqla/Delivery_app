@@ -59,7 +59,7 @@ namespace Delivery_app.Entities
                         new Product { Name = "Чікен макнагетс 9шт", Price=121, Shop=shops.FirstOrDefault(x=>x.Name=="McDonald's"),
                             Image="https://d3tqkqn8yl74v5.cloudfront.net/TPO-cso_ua_2131_Nuggets_9.png" },
                         new Product { Name = "Картопля фрі", Price=42, Shop=shops.FirstOrDefault(x=>x.Name=="McDonald's"),
-                            Image="https://res.cloudinary.com/glovoapp/f_auto,c_fill,dpr_1.0,h_60,w_60,q_auto:low,b_transparent/Products/x9os5mdnpyvoeeyew2bp" },
+                            Image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv758wlNux_MvWndQZWckjhg5Kul1rIYvEiyqDmBmtgQImGaOq" },
                         new Product { Name = "Макчікен", Price=100, Shop=shops.FirstOrDefault(x=>x.Name=="McDonald's"),
                             Image="https://d3tqkqn8yl74v5.cloudfront.net/TPO-cso_ua_2070_McChiken1.png" },
                         new Product { Name = "Чікен рол", Price=114, Shop=shops.FirstOrDefault(x=>x.Name=="McDonald's"),

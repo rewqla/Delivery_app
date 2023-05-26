@@ -4,24 +4,24 @@
         <div class="col-md-6">
             <h2>Контактна інформація</h2>
             <div class="form-group">
-                <label asp-for="UserName">Ім'я:</label>
-                <input asp-for="UserName" class="form-control" placeholder="Введіть ваше ім'я">
-                <span asp-validation-for="UserName" class="text-danger"></span>
+                <label for="UserName">Ім'я:</label>
+                <input id="UserName" class="form-control" placeholder="Введіть ваше ім'я">
+                <span for="UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Phone">Телефон:</label>
-                <input asp-for="Phone" class="form-control" placeholder="Введіть ваш номер телефону">
-                <span asp-validation-for="Phone" class="text-danger"></span>
+                <label for="Phone">Телефон:</label>
+                <input id="Phone" class="form-control" placeholder="Введіть ваш номер телефону">
+                <span for="Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email">Email:</label>
-                <input asp-for="Email" class="form-control" placeholder="Введіть вашу електронну пошту">
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label for="Email">Email:</label>
+                <input id="Email" class="form-control" placeholder="Введіть вашу електронну пошту">
+                <span for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Address">Адреса:</label>
-                <input asp-for="Address" class="form-control" placeholder="Введіть вашу адресу">
-                <span asp-validation-for="Address" class="text-danger"></span>
+                <label for="Address">Адреса:</label>
+                <input id="Address" class="form-control" placeholder="Введіть вашу адресу">
+                <span for="Address" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-primary">Оформити замовлення</button>
         </div>
@@ -42,132 +42,4 @@
     <img id="error-img" src="~/img/modal-cart-dummy.svg" alt="Image" class="img-fluid" style="height: 500px;">
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        let storage = JSON.parse(localStorage.getItem('cart'));
-        let totalPrice = 0;
-        console.log(storage)
-
-        if (storage != null && (Array.isArray(storage) && storage.length !== 0)) {
-            document.getElementById("empty-cart").classList.add("d-none");
-            document.getElementById("cart").classList.remove("d-none");
-
-            const cartItemsContainer = document.querySelector('.cart-items');
-            const orderItems = [];
-
-            for(let i=0;i<storage.length;i++){
-                totalPrice += storage[i].price;
-                const card = `
-                        <div class="card" style="margin: 2px 0;">
-                            <div class="row align-items-center p-1">
-                                <div class="col-md-3">
-                                    <img src="${storage[i].image}" alt="${storage[i].name}" class="img-fluid">
-                                </div>
-                                <div class="col-md-3">
-                                    <h5 name="name">${storage[i].name}</h5>
-                                    <p>Ціна: <span name="price">${storage[i].price}</span> ₴</p>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="input-group">
-                                        <input type="number" class="form-control form-control-sm" value="1" min="1" max="10">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <button class="btn btn-danger btn-sm delete-btn">Видалити</button>
-                                </div>
-                            </div>
-                        </div>
-                     `;
-                cartItemsContainer.innerHTML += card;
-
-                const orderItem = {
-                    Quantity: 1,
-                    Price: storage[i].price,
-                    ProductName: storage[i].name,
-                    ProductImage: storage[i].image
-                };
-                orderItems.push(orderItem);
-            }
-            document.getElementById("total-price").innerText = totalPrice;
-
-            const deleteButtons = document.querySelectorAll('.delete-btn');
-            deleteButtons.forEach(function (button) {
-                button.addEventListener('click', () => {
-                    const cards = document.querySelectorAll('.card')
-                    const card = button.closest('.card');
-                    const index = Array.from(cards).indexOf(card);
-                    storage.splice(index, 1);
-                    localStorage.setItem('cart', JSON.stringify(storage));
-                    card.remove();
-                    console.log(storage)
-                    if (storage == null || (Array.isArray(storage) && storage.length === 0)) {
-                        document.getElementById("empty-cart").classList.remove("d-none");
-                        document.getElementById("cart").classList.add("d-none");
-                    }
-                });
-            })
-
-            document.getElementById("clear-all").addEventListener("click", () => {
-                localStorage.clear();
-                document.getElementById("empty-cart").classList.remove("d-none");
-                document.getElementById("cart").classList.add("d-none");
-            });
-
-            const CalculateTotalPrice = () => {
-                const cards = document.querySelectorAll('.card');
-                totalPrice = 0;
-
-                cards.forEach((card) => {
-                    const price = card.querySelector("span[name='price']").innerText;
-                    const count = card.querySelector("input[type='number']").value;
-                    totalPrice += price * count;
-                });
-
-                document.getElementById("total-price").innerText = totalPrice;
-            };
-
-            const numberInputs = document.querySelectorAll('input[type="number"]');
-            numberInputs.forEach((input) => {
-                input.addEventListener('input', CalculateTotalPrice);
-            });
-
-            document.querySelector('form').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const form = e.target;
-                const userName = form.querySelector('input[name="UserName"]').value;
-                const phone = form.querySelector('input[name="Phone"]').value;
-                const email = form.querySelector('input[name="Email"]').value;
-                const address = form.querySelector('input[name="Address"]').value;
-
-                const orderViewModel = {
-                    UserName: userName,
-                    Phone: phone,
-                    Email: email,
-                    Address: address,
-                    TotalPrice: totalPrice,
-                    OrderItems: orderItems
-                };
-
-                form.querySelectorAll('input[type="number"]').forEach((input,index) => {
-                    orderViewModel.OrderItems[index].Quantity=input.value;
-                });
-
-                fetch('home/CreateOrder', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body : JSON.stringify(orderViewModel)
-                }).then(response => {
-                    window.location.href="/success";
-                    console.log(response)
-                    localStorage.clear();
-                });
-            });
-        }
-        else {
-            document.getElementById("empty-cart").classList.remove("d-none");
-            document.getElementById("cart").classList.add("d-none");
-        }
-    });
-</script>
+<script src="~/js/cart.js" asp-append-version="true"></script>
