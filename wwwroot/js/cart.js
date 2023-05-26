@@ -1,6 +1,6 @@
 ﻿let storage = JSON.parse(localStorage.getItem('cart'));
+let discount = 1;
 let totalPrice = 0;
-console.log(storage)
 
 if (storage != null && (Array.isArray(storage) && storage.length !== 0)) {
     document.getElementById("empty-cart").classList.add("d-none");
@@ -50,10 +50,11 @@ if (storage != null && (Array.isArray(storage) && storage.length !== 0)) {
             const cards = document.querySelectorAll('.card')
             const card = button.closest('.card');
             const index = Array.from(cards).indexOf(card);
+
             storage.splice(index, 1);
             localStorage.setItem('cart', JSON.stringify(storage));
             card.remove();
-            console.log(storage)
+
             if (storage == null || (Array.isArray(storage) && storage.length === 0)) {
                 document.getElementById("empty-cart").classList.remove("d-none");
                 document.getElementById("cart").classList.add("d-none");
@@ -62,7 +63,7 @@ if (storage != null && (Array.isArray(storage) && storage.length !== 0)) {
     })
 
     document.getElementById("clear-all").addEventListener("click", () => {
-        localStorage.clear();
+        localStorage.removeItem("cart")
         document.getElementById("empty-cart").classList.remove("d-none");
         document.getElementById("cart").classList.add("d-none");
     });
@@ -77,6 +78,7 @@ if (storage != null && (Array.isArray(storage) && storage.length !== 0)) {
             totalPrice += price * count;
         });
 
+        totalPrice = totalPrice - totalPrice * discount / 100;
         document.getElementById("total-price").innerText = totalPrice;
     };
 
@@ -85,6 +87,27 @@ if (storage != null && (Array.isArray(storage) && storage.length !== 0)) {
         input.addEventListener('input', CalculateTotalPrice);
     });
 
+    document.getElementById("apply-coupon").addEventListener("click", () => {
+        const couponStorage = JSON.parse(localStorage.getItem("coupons"));
+        const couponCode = document.getElementById("coupon-code").value;
+        const couponCodeSpan = document.querySelector("span[for='coupon-code']");
+        const currentCoupon = couponStorage.find(x => x.code == couponCode);
+        if (couponCode != "") {
+            if (currentCoupon) {
+                couponCodeSpan.innerText = "";
+                discount = +currentCoupon.discount;
+                document.getElementById("coupon").classList.add("d-none");
+                document.getElementById("coupon-success").classList.remove("d-none");
+                CalculateTotalPrice();
+            }
+            else {
+                couponCodeSpan.innerText = "Заданий купон відсутній";
+            }
+        }
+        else {
+            couponCodeSpan.innerText = "Купон не може бути пустим";
+        }
+    });
 
     function ValidateInput(Id, expression_result, error_message, isValid) {
         const errorSpan = document.querySelector(`span[for=${Id}]`);
@@ -136,6 +159,7 @@ if (storage != null && (Array.isArray(storage) && storage.length !== 0)) {
             address: document.getElementById("Address").value
         }
     }
+
     document.querySelector('form').addEventListener('submit', (e) => {
         e.preventDefault();
         const form = e.target;

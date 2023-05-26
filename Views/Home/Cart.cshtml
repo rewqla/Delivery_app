@@ -33,6 +33,17 @@
             <div class="cart-items" style="max-height: 400px; overflow-y: auto; overflow-x: hidden;">
             </div>
             <h4>Загальна ціна замовлення: <span id="total-price"></span>₴</h4>
+            <div id="coupon">
+                <div class="form-group">
+                    <label for="coupon-code">Код купона:</label>
+                    <input id="coupon-code" class="form-control" placeholder="Введіть купон">
+                    <span for="coupon-code" class="text-danger"></span>
+                </div>
+                <span id="apply-coupon" class="btn btn-primary">Застосувати купон</span>
+            </div>
+            <span id="coupon-success" class="d-none" style=" font-size: 22px; color: green;">
+                Купон успішно використаний
+            </span>
         </div>
     </div>
 </form>

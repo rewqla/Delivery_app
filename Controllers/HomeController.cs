@@ -59,6 +59,11 @@ namespace Delivery_app.Controllers
             var searchData = _ordreService.FindOrders(model);
             return Json(searchData);
         }
+        [Route("coupons")]
+        public IActionResult Coupons()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();

@@ -42,7 +42,7 @@ document.getElementById("orderLookupForm").addEventListener("submit", (e) => {
     const ordersResult = document.getElementById("orders-result");
     const noOrders = document.getElementById("no-orders");
     ordersResult.classList.add("d-none");
-    ordersResult.innerHTML=""
+    ordersResult.innerHTML = ""
     noOrders.classList.add("d-none");
 
     if (CheckEmptyInputs() && ValidateData(phone, email)) {
